@@ -3,10 +3,10 @@
   "info" : {
     "title" : "NyoStore",
     "description" : "This is a NyoStore server. Here you can find \nout all the rest api's.\n",
-    "version" : "1.0.0-oas3"
+    "version" : "2.1"
   },
   "servers" : [ {
-    "url" : "https://virtserver.swaggerhub.com/VinaySavner23/Nyo_Store/1.0.0-oas3",
+    "url" : "https://virtserver.swaggerhub.com/Developmenttest/NyoStore/2.1",
     "description" : "SwaggerHub API Auto Mocking"
   }, {
     "url" : "http://authlib.nyotek.com:3010",
