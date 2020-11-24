@@ -1,0 +1,4213 @@
+openapi: 3.0.0
+info:
+  description: |
+    This is a NyoStore server. Here you can find 
+    out all the rest api's.
+  version: '2.1'
+  title: NyoStore
+tags:
+  - name: Contact
+    description: Access to contact
+  - name: Address
+    description: Access to address
+  - name: Schedule
+    description: Access to schedules
+  - name: File
+    description: Access to files
+  - name: Store
+    description: Access to stores
+  - name: Branch
+    description: Access to braches
+  - name: Role
+    description: Access to roles
+  - name: Employee
+    description: Access to employees
+  - name: Aggregator
+    description: Access to aggregator
+
+paths:
+# Address services
+  # contact
+  /contact:
+    description: Address service (Like contact and address)
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    post:
+      tags:
+        - Contact
+      summary: Add a new contact to the store/user
+      operationId: addContact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contact_person:
+                  description: Name of contact person
+                  type: string
+                  example: John Doe
+                phone:
+                  description: Phone no. of contact person
+                  type: string
+                  example: +0 987 654 321
+                email:
+                  description: E-mail of contact person
+                  type: string
+                  example: johndoe@gmail.com             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Key'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /contact/{key}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    get:
+      tags:
+        - Contact
+      summary: Get contact by key
+      description: Returns a single contact
+      operationId: getContactByKey
+      parameters:
+        - name: key
+          in: path
+          description: Key of contact to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactByKey'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /contact/{key}/contact_person:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    patch:
+      tags:
+        - Contact
+      summary: Update contact person by key
+      description: Update contact name
+      operationId: patchContactPersonByKey
+      parameters:
+        - name: key
+          in: path
+          description: Key of contact to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contact_person:
+                  description: Name of contact person
+                  type: string
+                  example: John Doe   
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /contact/{key}/phone:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    patch:
+      tags:
+        - Contact
+      summary: Update contact phone by key
+      description: Update contact name
+      operationId: patchContactPhoneByKey
+      parameters:
+        - name: key
+          in: path
+          description: Key of contact to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  description: Phone no. of contact person
+                  type: string
+                  example: +0 000 000 000  
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /contact/{key}/email:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    patch:
+      tags:
+        - Contact
+      summary: Update contact email by key
+      description: Update contact name
+      operationId: patchContactEmailByKey
+      parameters:
+        - name: key
+          in: path
+          description: Key of contact to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  description: E-mail of contact person
+                  type: string
+                  example: johndoe@gmail.com
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  # address
+  /address:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    post:
+      tags:
+        - Address
+      summary: Add a new address to the store
+      operationId: addAddress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contact_id:
+                  description: Id of contact person
+                  type: string
+                  example: 0123ABCD4567WXYZ
+                addr1:
+                  description: First address of contact person
+                  type: string
+                  example: ABCD
+                addr2:
+                  description: Second address of contact person
+                  type: string
+                  example: ABCD
+                city:
+                  description: City of contact person
+                  type: string
+                  example: ABCD
+                state:
+                  description: State of contact person
+                  type: string
+                  example: ABCD
+                country:
+                  description: cCountry of contact person
+                  type: string
+                  example: ABCD
+                latitude:
+                  description: Latitude of contact person
+                  type: string
+                  example: 12.123456     
+                longitude:
+                  description: Latitude of contact person
+                  type: string
+                  example: 12.123456
+                zipcode:
+                  description: Zipcode of contact person
+                  type: string
+                  example: ABC123 
+                address_type:
+                  description: Address type of contact person
+                  type: string
+                  example: store
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Key'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /address/{key}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    get:
+      tags:
+        - Address
+      summary: Get address by key
+      description: Returns all the data of contact person
+      operationId: getAddressByKey
+      parameters:
+        - name: key
+          in: path
+          description: Key of address to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressByKey'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /address/{address_id}/contact_id:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    patch:
+      tags:
+        - Address
+      summary: Update address person by address id
+      description: Update contact id
+      operationId: patchAddressContactIdByKey
+      parameters:
+        - name: address_id
+          in: path
+          description: Address id of address to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contact_id:
+                  description: Contact id of address to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /address/{address_id}/addr1:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    patch:
+      tags:
+        - Address
+      summary: Update first address of person by address id
+      description: Update first address
+      operationId: patchAddressAddr1ByKey
+      parameters:
+        - name: address_id
+          in: path
+          description: Address id of address to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                addr1:
+                  description: First Address of address to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /address/{address_id}/addr2:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    patch:
+      tags:
+        - Address
+      summary: Update address person by address id
+      description: Update second address
+      operationId: patchAddressAddr2ByKey
+      parameters:
+        - name: address_id
+          in: path
+          description: Address id of address to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                addr2:
+                  description: Second address of address to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /address/{address_id}/city:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    patch:
+      tags:
+        - Address
+      summary: Update city name by address id
+      description: Update city name
+      operationId: patchAddressCityByKey
+      parameters:
+        - name: address_id
+          in: path
+          description: Address id of address to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                city:
+                  description: City of address to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /address/{address_id}/state:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    patch:
+      tags:
+        - Address
+      summary: Update state name by address id
+      description: Update state name
+      operationId: patchAddressStateByKey
+      parameters:
+        - name: address_id
+          in: path
+          description: Address id of address to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                state:
+                  description: State of address to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /address/{address_id}/country:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    patch:
+      tags:
+        - Address
+      summary: Update country name by address id
+      description: Update country name
+      operationId: patchAddressCountryByKey
+      parameters:
+        - name: address_id
+          in: path
+          description: Address id of address to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                country:
+                  description: Country of address to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /address/{address_id}/zipcode:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    patch:
+      tags:
+        - Address
+      summary: Update zipcode name by address id
+      description: Update zipcode name
+      operationId: patchAddressZipcodeByKey
+      parameters:
+        - name: address_id
+          in: path
+          description: Address id of address to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                zipcode:
+                  description: Zipcode of address to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /address/{address_id}/geom:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    patch:
+      tags:
+        - Address
+      summary: Update geom name by address id
+      description: Update geom name
+      operationId: patchAddressGeomByKey
+      parameters:
+        - name: address_id
+          in: path
+          description: Address id of address to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                latitude:
+                  description: latitude of address to return
+                  type: string
+                longitude:
+                  description: latitude of address to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /nearby-address:
+    servers:
+      - url: 'http://authlib.nyotek.com:3060'
+        description: Address service (Like contact and address)
+    get:
+      tags:
+        - Address
+      summary: Get near by address
+      description: Get near by address
+      operationId: getNearByAddress
+      parameters:
+        - name: latitude
+          in: query
+          description: Latitude of address to return
+          required: true
+          schema:
+            type: string
+        - name: longitude
+          in: query
+          description: Longitude of address to return
+          required: true
+          schema:
+            type: string
+        - name: radius
+          in: query
+          description: Radius of address to return
+          required: true
+          schema:
+            type: integer
+        - name: maxrecords
+          in: query
+          description: maxrecords of address to return
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Nearby-address'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+# Schedule Manager
+  /store/{store_id}/schedules:
+    servers:
+      - url: 'http://authlib.nyotek.com:3030'
+        description: Schedule Manager
+    get:
+      tags:
+        - Schedule
+      summary: Get schedules
+      description: Returns all schedules
+      operationId: getSchedules
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedules'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'  
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /store/{store_id}/schedule:
+    servers:
+      - url: 'http://authlib.nyotek.com:3030'
+        description: Schedule Manager
+    post:
+      tags:
+        - Schedule
+      summary: Add schedule
+      description: Add a schedule
+      operationId: addSchedule
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Name of schedule
+                  type: string 
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Key'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'  
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /store/{store_id}/schedule/{schedule_id}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3030'
+        description: Schedule Manager
+    get:
+      tags:
+        - Schedule
+      summary: Get schedules
+      description: Returns a single schedule
+      operationId: getScheduleById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: schedule_id
+          in: path
+          description: Schedule id of schedules to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduleById'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'  
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+    patch:
+      tags:
+        - Schedule
+      summary: Update name of schedule by address id
+      description: Update name
+      operationId: patchScheduleNameById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: schedule_id
+          in: path
+          description: Schedule id of schedules to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Name of schedule to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'            
+        '404':
+          $ref: '#/components/responses/NotFound'  
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: [] 
+    delete:
+      tags:
+        - Schedule
+      summary: Deletes a schedule
+      operationId: deleteSchedule
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: schedule_id
+          in: path
+          description: Schedule id of schedules to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /store/{store_id}/schedule/{schedule_id}/timezone:
+    servers:
+      - url: 'http://authlib.nyotek.com:3030'
+        description: Schedule Manager
+    patch:
+      tags:
+        - Schedule
+      summary: Update timezone of schedule by address id
+      description: Update timezone
+      operationId: patchScheduleTimezoneById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: schedule_id
+          in: path
+          description: Schedule id of schedules to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                timezone:
+                  description: Timezone of schedule to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'  
+        '403':
+          $ref: '#/components/responses/Forbidden'          
+        '404':
+          $ref: '#/components/responses/NotFound'  
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /store/{store_id}/schedule/{schedule_id}/timeslot:
+    servers:
+      - url: 'http://authlib.nyotek.com:3030'
+        description: Schedule Manager
+    post:
+      tags:
+        - Schedule
+      summary: Add timeslot of schedule by address id
+      description: Add timeslot
+      operationId: postScheduleTimeslotById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: schedule_id
+          in: path
+          description: Schedule id of schedules to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                begin:
+                  description: Begin of timeslot
+                  type: number
+                end:
+                  description: End of timeslot
+                  type: number 
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Key'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /store/{store_id}/schedule/{schedule_id}/timeslot/{key}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3030'
+        description: Schedule Manager
+    patch:
+      tags:
+        - Schedule
+      summary: Update timeslot of schedule by address id
+      description: Update timeslot
+      operationId: patchScheduleTimeslotById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: schedule_id
+          in: path
+          description: Schedule id of schedules to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of timeslot to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                begin:
+                  description: Begin of timeslot
+                  type: number
+                end:
+                  description: End of timeslot
+                  type: number 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Schedule
+      summary: Deletes a timeslot
+      operationId: deleteTimeslot
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: schedule_id
+          in: path
+          description: Schedule id of schedules to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of timeslot to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+# File Service
+  /upload:
+    servers:
+      - url: 'http://authlib.nyotek.com:3050'
+        description: File service
+    post:
+      tags:
+        - File
+      summary: Upload file
+      operationId: uploadFile
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                owner:
+                  description: Owner id
+                  type: string
+                private:
+                  description: Private status
+                  type: string
+                file:
+                  description: file to upload
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Upload'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /file/{key}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3050'
+        description: File service
+    get:
+      tags:
+        - File
+      summary: Get file data
+      description: Returns a single file
+      operationId: getFileByKey
+      parameters:
+        - name: key
+          in: path
+          description: Key of uploaded file to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'  
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  /stream/{key}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3050'
+        description: File service
+    get:
+      tags:
+        - File
+      summary: Get stream data
+      description: Returns a single file
+      operationId: getStreamByKey
+      parameters:
+        - name: key
+          in: path
+          description: Key of uploaded file to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            image/*:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'  
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+# Store Manager
+  #Store
+  /store/{store_id}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    post:
+      tags:
+        - Store
+      summary: Add a new store
+      operationId: addStore
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+        
+    get:
+      tags:
+        - Store
+      summary: Get a store by id
+      operationId: getStoreById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Store'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/name: 
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    patch:
+      tags:
+        - Store
+      summary: Update name of store by store id
+      description: Update name
+      operationId: patchStoreNameById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Name of store to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: [] 
+
+  /store/{store_id}/industry: 
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    patch:
+      tags:
+        - Store
+      summary: Update industry of store by store id
+      description: Update industry
+      operationId: patchStoreIndustryById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                industry:
+                  description: Industry of store to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: [] 
+
+  /store/{store_id}/slogan:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch) 
+    patch:
+      tags:
+        - Store
+      summary: Update slogan of store by store id
+      description: Update slogan
+      operationId: patchStoreSloganById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                slogan:
+                  description: Slogan of store to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/logo:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch) 
+    patch:
+      tags:
+        - Store
+      summary: Update logo of store by store id
+      description: Update logo
+      operationId: patchStoreLogoById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                logo:
+                  description: Logo of store to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/address/{address_id}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    patch:
+      tags:
+        - Store
+      summary: Find address of store by address id
+      description: Returns status
+      operationId: findStoreAddressStatus
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: address_id
+          in: path
+          description: Address id of store to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'  
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/website: 
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    patch:
+      tags:
+        - Store
+      summary: Update website of store by store id
+      description: Update website
+      operationId: patchStoreWebsiteById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                website:
+                  description: Website of store to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/tax:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch) 
+    patch:
+      tags:
+        - Store
+      summary: Update tax of store by store id
+      description: Update tax
+      operationId: patchStoreTaxById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tax_id:
+                  description: Tax id of store to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/registration: 
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    patch:
+      tags:
+        - Store
+      summary: Update registration of store by store id
+      description: Update registration
+      operationId: patchStoreRegistrationById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                registration_number:
+                  description: registration id of store to return
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/document:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    post:
+      tags:
+        - Store
+      summary: Update document
+      operationId: updateDocument
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                document:
+                  description: document to upload
+                  type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/document/delete:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    patch:
+      tags:
+        - Store
+      summary: Deletes document
+      operationId: deleteDocument
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                document:
+                  description: document to delete
+                  type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  #Branch
+  /store/{store_id}/branch:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    post:
+      tags:
+        - Branch
+      summary: Add a new branch
+      operationId: addBranch
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                branch_id:
+                  description: Id of branch
+                  type: string 
+                name:
+                  description: Name of branch
+                  type: string 
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Key'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/branches:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    get:
+      tags:
+        - Branch
+      summary: Get all branches
+      operationId: getBranches
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Branch'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/branch/{key}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    get:
+      tags:
+        - Branch
+      summary: Get a branch by id
+      operationId: getBranchById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of branch to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                  data:
+                      $ref: '#/components/schemas/Branch'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+    delete:
+      tags:
+        - Branch
+      summary: Delete a branch
+      operationId: deleteBranchAddressId
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of branch to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []  
+
+  /store/{store_id}/branch/{key}/branch_id:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    patch:
+      tags:
+        - Branch
+      summary: Update a branch id
+      operationId: updateBranchId
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of branch to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                branch_id:
+                  description: Id of branch  
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  
+  /store/{store_id}/branch/{key}/name:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    patch:
+      tags:
+        - Branch
+      summary: Update a branch name
+      operationId: updateBranchName
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of branch to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Name of branch  
+                  type: string 
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+  
+  /store/{store_id}/branch/{key}/address/{address_id}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    patch:
+      tags:
+        - Branch
+      summary: Update a branch address id
+      operationId: updateBranchAddressId
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of branch to return
+          required: true
+          schema:
+            type: string
+        - name: address_id
+          in: path
+          description: Address id of branch to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/branch/{key}/schedule/{schedule_id}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    patch:
+      tags:
+        - Branch
+      summary: Update a branch schedule id
+      operationId: updateBranchScheduleId
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of branch to return
+          required: true
+          schema:
+            type: string
+        - name: schedule_id
+          in: path
+          description: Schedule id of branch to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+    delete:
+      tags:
+        - Branch
+      summary: Delete a branch schedule id
+      operationId: deleteBranchScheduleId
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of branch to return
+          required: true
+          schema:
+            type: string
+        - name: schedule_id
+          in: path
+          description: Schedule id of branch to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/branch/{key}/status:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    patch:
+      tags:
+        - Branch
+      summary: Update a branch Status 
+      operationId: updateBranchStatus
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of branch to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  description: Status of branch 
+                  type: string 
+                  example: active
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /address-branches:
+    servers:
+      - url: 'http://authlib.nyotek.com:3040'
+        description: Store Manager (Like store and branch)
+    post:
+      tags:
+        - Branch
+      summary: Get branches by address id's 
+      operationId: getBranchByAddressId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address_ids:
+                  description: Address id's to get branch 
+                  type: array 
+                  items:
+                    type: object
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Branch'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+#Role Manager
+  /store/{store_id}/roles:
+    servers:
+      - url: 'http://authlib.nyotek.com:3010'
+        description: Role Manager
+    get:
+      tags:
+        - Role
+      summary: Get all roles
+      operationId: getRoles
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Roles'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+        
+  /store/{store_id}/role:
+    servers:
+      - url: 'http://authlib.nyotek.com:3010'
+        description: Role Manager
+    post:
+      tags:
+        - Role
+      summary: Add a new role
+      operationId: addRole
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  description: Name of role
+                  type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Key'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/role/{key}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3010'
+        description: Role Manager
+    get:
+      tags:
+        - Role
+      summary: Get a role
+      operationId: getRoleByKey
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of role to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                  data:
+                      $ref: '#/components/schemas/Roles'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+    patch:
+      tags:
+        - Role
+      summary: Update role name
+      operationId: updateRole
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of role to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  description: Name of role
+                  type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - Role
+      summary: Delete a role
+      operationId: deleteRole
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of role to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+
+  /store/{store_id}/role/{key}/description:
+    servers:
+      - url: 'http://authlib.nyotek.com:3010'
+        description: Role Manager
+    patch:
+      tags:
+        - Role
+      summary: Update a description of  role
+      operationId: updateRoleDescription
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of role to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  description: Description of role
+                  type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/role/{key}/resource/{resource_id}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3010'
+        description: Role Manager
+    patch:
+      tags:
+        - Role
+      summary: Add a resounce in role
+      operationId: updateRoleResourceId
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of role to return
+          required: true
+          schema:
+            type: string
+        - name: resource_id
+          in: path
+          description: Resource id of role to return
+          required: true
+          schema:
+            type: string
+    
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+    delete:
+      tags:
+        - Role
+      summary: Delete description of role
+      operationId: deleteRoleDescription
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of role to return
+          required: true
+          schema:
+            type: string
+        - name: resource_id
+          in: path
+          description: Resource id of role to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+#Employee Manager
+  /store/{store_id}/employees:
+    servers:
+      - url: 'http://authlib.nyotek.com:3020'
+        description: Employee Manager
+    get:
+      tags:
+        - Employee
+      summary: Get all employees
+      operationId: getEmployees
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Employee'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/employee:
+    servers:
+      - url: 'http://authlib.nyotek.com:3020'
+        description: Employee Manager
+    post:
+      tags:
+        - Employee
+      summary: Add employee
+      operationId: addEmployee
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  description: E-mail of employee
+                  type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Key'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/employee/{key}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3020'
+        description: Employee Manager
+    get:
+      tags:
+        - Employee
+      summary: Get employee by key
+      operationId: getEmployeeById
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of employee to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/Employee'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+    delete:
+      tags:
+        - Employee
+      summary: Delete employee
+      operationId: deleteEmployee
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of employee to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+
+  /store/{store_id}/employee/{key}/resend:
+    servers:
+      - url: 'http://authlib.nyotek.com:3020'
+        description: Employee Manager
+    patch:
+      tags:
+        - Employee
+      summary: Resend invitation to employee
+      operationId: resendInvitation
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of employee to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  description: E-mail of employee
+                  type: string
+                role:
+                  description: Id's of employee role
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/employee/{key}/role/{role_id}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3020'
+        description: Employee Manager
+    patch:
+      tags:
+        - Employee
+      summary: Add role to employee
+      operationId: addRoleToEmployee
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of employee to return
+          required: true
+          schema:
+            type: string
+        - name: role_id
+          in: path
+          description: Role id of employee to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+    delete:
+      tags:
+        - Employee
+      summary: Delete role to employee
+      operationId: deleteRoleToEmployee
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of employee to return
+          required: true
+          schema:
+            type: string
+        - name: role_id
+          in: path
+          description: Role id of employee to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/employee/{key}/schedule/{schedule_id}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3020'
+        description: Employee Manager
+    patch:
+      tags:
+        - Employee
+      summary: Update schedule id to employee
+      operationId: updateScheduleIdOfEmployee
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of employee to return
+          required: true
+          schema:
+            type: string
+        - name: schedule_id
+          in: path
+          description: Schedule id of employee to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+    delete:
+      tags:
+        - Employee
+      summary: Delete schedule id of employee
+      operationId: deleteScheduleIdOfEmployee
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of employee to return
+          required: true
+          schema:
+            type: string
+        - name: schedule_id
+          in: path
+          description: Schedule id of employee to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/employee/{key}/activate:
+    servers:
+      - url: 'http://authlib.nyotek.com:3020'
+        description: Employee Manager
+    post:
+      tags:
+        - Employee
+      summary: Activate employee
+      operationId: activateEmployee
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of employee to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nyohub_id:
+                  description: Nyohub id of employee
+                  type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/employee/{key}/inactive:
+    servers:
+      - url: 'http://authlib.nyotek.com:3020'
+        description: Employee Manager
+    patch:
+      tags:
+        - Employee
+      summary: Make inactive to employee
+      operationId: makeInactiveToEmployee
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of employee to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_id}/employee/{key}/active:
+    servers:
+      - url: 'http://authlib.nyotek.com:3020'
+        description: Employee Manager
+    patch:
+      tags:
+        - Employee
+      summary: Make active to employee
+      operationId: makeActiveToEmployee
+      parameters:
+        - name: store_id
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          description: Key of employee to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+#Aggregator Manager
+  /store/{store_key}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3070'
+        description: Aggrigator service
+    get:
+      tags:
+        - Aggregator
+      summary: Get store data
+      operationId: getAggregatorStore
+      parameters:
+        - name: store_key
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AggregatorStoreData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /store/{store_key}/branch/{branch_key}:
+    servers:
+      - url: 'http://authlib.nyotek.com:3070'
+        description: Aggrigator service
+    get:
+      tags:
+        - Aggregator
+      summary: Get store data
+      operationId: getAggregatorStoreBranch
+      parameters:
+        - name: store_key
+          in: path
+          description: Store id of store to return
+          required: true
+          schema:
+            type: string
+        - name: branch_key
+          in: path
+          description: Branch id of branch to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AggregatorStoreBranchData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+  /nearby-branches:
+    servers:
+      - url: 'http://authlib.nyotek.com:3070'
+        description: Aggrigator service
+    get:
+      tags:
+        - Aggregator
+      summary: Get nearby branches
+      operationId: getNearByBranches
+      parameters:
+        - name: latitude
+          in: query
+          description: Latitude of address to return
+          required: true
+          schema:
+            type: string
+        - name: longitude
+          in: query
+          description: Longitude of address to return
+          required: true
+          schema:
+            type: string
+        - name: radius
+          in: query
+          description: Radius of address to return
+          required: true
+          schema:
+            type: integer
+        - name: maxrecords
+          in: query
+          description: maxrecords of address to return
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Nearby-branches'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'    
+        '403':
+          $ref: '#/components/responses/Forbidden'       
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '5XX':
+          $ref: '#/components/responses/UnexpectedError'
+      security:
+        - bearerAuth: []
+
+# externalDocs:
+#   description: Find out more about Swagger
+#   url: 'http://swagger.io'
+servers:
+  # Added by API Auto Mocking Plugin
+  # - description: SwaggerHub API Auto Mocking
+  #   url: https://virtserver.swaggerhub.com/VinaySavner23/Nyo_Store/1.0.0-oas3
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/Developmenttest/NyoStore/2.1
+  - url: 'http://authlib.nyotek.com:3010'
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+      port:
+        enum:
+          - '3010'
+          - '3020'
+          - '3030'
+          - '3040'
+          - '3050'
+          - '3060'
+          - '3070'
+        default: '3010'
+components:
+  # requestBodies:
+    # Pet:
+    #   content:
+    #     application/json:
+    #       schema:
+    #         $ref: '#/components/schemas/Pet'
+    #   description: Pet object that needs to be added to the store
+    #   required: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    # nyotek_auth:
+    #   type: oauth2
+    #   flows:
+    #     implicit:
+    #       authorizationUrl: 'http://demo.nyotek.com/auth'
+    #       scopes:
+    #         'write:pets': modify pets in your account
+    #         'read:pets': read your pets
+    # api_key:
+    #   type: apiKey
+    #   name: api_key
+    #   in: header
+  schemas:
+    Success:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+      required:
+        - status
+        - message
+
+    Error:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: false
+        message:
+          type: string
+      required:
+        - status
+        - message
+
+    Unauthorized:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: false
+        message:
+          type: string
+        info:
+          type: string
+      required:
+        - status
+        - message
+
+    Forbidden:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: false
+        message:
+          type: string
+        info:
+          type: object
+      required:
+        - status
+        - message
+
+    Key:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            key:
+              type: string
+      xml:
+        name: Contact
+
+    ContactByKey:
+      type: object
+      properties:
+        status:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            contact_id:
+              type: string
+            contact_person:
+              type: string
+            phone:
+              type: string
+            email:
+              type: string
+      xml:
+        name: ContactByKey
+
+    AddressByKey:
+      type: object
+      properties:
+        status:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            address_id:
+              type: string
+            contact_id:
+              type: string
+            addr1:
+              type: string
+            addr2:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            country:
+              type: string
+            zipcode:
+              type: string
+            geog:
+              type: object
+              properties:
+                crs:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    properties:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                type: 
+                  type: string
+                coordinates: 
+                  items:
+                    type: string
+            deleted:
+              type: boolean
+              example: false
+            address_type:
+              type: string
+              example: store
+      xml:
+        name: AddressByKey
+
+    Nearby-address:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              address_id:
+                type: string
+              distance:
+                type: number
+      xml:
+        name: Nearby-address
+
+    Nearby-branches:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              address_id:
+                type: string
+              distance:
+                type: number
+              branch_id:
+                type: string
+              disbranch_id_customtance:
+                type: string
+              name:
+                type: string
+              schedule_id:
+                type: string
+              status:
+                type: string
+      xml:
+        name: Nearby-branches
+
+    Schedules:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              schedule_id:
+                type: string
+              name:
+                type: string
+              timezone:
+                type: string
+      xml:
+        name: Schedules
+
+    ScheduleById:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            schedule_id:
+              type: string
+            name:
+              type: string
+            timezone:
+              type: string
+            policy_id:
+              type: string
+            timeslots:
+              type: string
+      xml:
+        name: ScheduleById
+
+    Upload:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            key:
+              type: string
+            publicUrl:
+              type: string
+      xml:
+        name: Upload
+
+    File:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            file_id:
+              type: string
+            owner:
+              type: string
+            content_type:
+              type: string
+            ext:
+              type: string
+            filename:
+              type: string
+            browser_url:
+              type: string
+            download_url:
+              type: string
+            content_length:
+              type: string
+            checksum:
+              type: string
+            created_at:
+              type: string
+            size:
+              type: number
+            height:
+              type: number
+            width:
+              type: number
+            format:
+              type: string
+            duration:
+              type: string
+            codec:
+              type: string
+      xml:
+        name: File
+
+    Store:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            store_id:
+              type: string
+            name:
+              type: string
+            industry:
+              type: string
+            slogan:
+              type: string
+            logo:
+              type: string
+            website:
+              type: string
+            tax_id:
+              type: string
+            registration_number:
+              type: string
+            documents:
+              type: array
+              items:
+                type: string            
+      xml:
+        name: Store
+
+    Branch:
+      type: object
+      properties:
+        branch_id:
+          type: string
+        branch_id_custom:
+          type: string
+        name:
+          type: string
+        address_id:
+          type: string
+        schedule_id:
+          type: string
+        status:
+          type: string           
+      xml:
+          name: Branch
+
+    Roles:
+      type: object
+      properties:
+        role_id:
+          type: string
+        role:
+          type: string
+        description:
+          type: string
+        resource_id:
+          type: array
+          items:
+            type: string
+        policy_id:
+          type: string       
+      xml:
+          name: Roles
+
+    Employee:
+      type: object
+      properties:
+        employee_id:
+          type: string
+        email:
+          type: string
+        role_id:
+          type: array
+          items:
+            type: string
+        schedule_id:
+          type: string
+        is_active:
+          type: boolean       
+      xml:
+          name: Employee
+    
+    AggregatorStoreData:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            store_id:
+              type: string
+            name:
+              type: string
+            industry:
+              type: string
+            slogan:
+              type: string
+            logo:
+              type: string
+            website:
+              type: string
+            tax_id:
+              type: string
+            registration_number:
+              type: string
+            documents:
+              type: array
+              items:
+                type: string 
+            address:
+              type: object
+              properties:
+                address_id:
+                  type: string
+                addr1:
+                  type: string
+                addr2:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                country:
+                  type: string
+                zipcode:
+                  type: string
+                geog:
+                  type: object
+                  properties:
+                    crs:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                        properties:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                    type: 
+                      type: string
+                    coordinates:
+                      type: array 
+                      items:
+                        type: number
+                deleted:
+                  type: boolean
+                  example: false
+                address_type:
+                  type: string
+                  example: store  
+                contact:
+                  type: object
+                  properties:
+                    contact_id:
+                      type: string
+                    contact_person:
+                      type: string
+                    phone:
+                      type: string
+                    email:
+                      type: string         
+      xml:
+        name: AggregatorStoreData
+
+    AggregatorStoreBranchData:
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            branch_id:
+              type: string
+            branch_id_custom:
+              type: string
+            name:
+              type: string
+            status:
+              type: string 
+            address:
+              type: object
+              properties:
+                address_id:
+                  type: string
+                addr1:
+                  type: string
+                addr2:
+                  type: string
+                city:
+                  type: string
+                state:
+                  type: string
+                country:
+                  type: string
+                zipcode:
+                  type: string
+                geog:
+                  type: object
+                  properties:
+                    crs:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                        properties:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                    type: 
+                      type: string
+                    coordinates: 
+                      type: array 
+                      items:
+                        type: number
+                deleted:
+                  type: boolean
+                  example: false
+                address_type:
+                  type: string
+                  example: store  
+                contact:
+                  type: object
+                  properties:
+                    contact_id:
+                      type: string
+                    contact_person:
+                      type: string
+                    phone:
+                      type: string
+                    email:
+                      type: string  
+            schedule:
+              type: object
+              properties:
+                schedule_id:
+                  type: string
+                name:
+                  type: string
+                timezone:
+                  type: string
+                policy_id:
+                  type: string
+                timeslots:
+                  type: string       
+      xml:
+        name: AggregatorStoreBranchData
+
+
+
+    # ApiResponse:
+    #   type: object
+    #   properties:
+    #     code:
+    #       type: integer
+    #       format: int32
+    #     type:
+    #       type: string
+    #     message:
+    #       type: string
+
+  
+  responses:
+    Success:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Success'
+    InvalidInput:
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Forbidden'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Unauthorized'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnexpectedError:
+      description: Unexpected Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
