@@ -3,7 +3,7 @@ info:
   description: |
     This is a NyoStore server. Here you can find 
     out all the rest api's.
-  version: '2.1'
+  version: 1.0.0-oas3
   title: NyoStore
 tags:
   - name: Contact
@@ -63,6 +63,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Key'
+          # headers:
+          #   X-RateLimit-Limit:
+          #     $ref: '#/components/headers/X-RateLimit-Limit'
+          #   X-RateLimit-Remaining:
+          #     $ref: '#/components/headers/X-RateLimit-Remaining'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3533,12 +3538,6 @@ paths:
 #   description: Find out more about Swagger
 #   url: 'http://swagger.io'
 servers:
-  # Added by API Auto Mocking Plugin
-  # - description: SwaggerHub API Auto Mocking
-  #   url: https://virtserver.swaggerhub.com/VinaySavner23/Nyo_Store/1.0.0-oas3
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/Developmenttest/NyoStore/2.1
   - url: 'http://authlib.nyotek.com:3010'
     variables:
       protocol:
@@ -3582,6 +3581,17 @@ components:
     #   type: apiKey
     #   name: api_key
     #   in: header
+  headers:
+    X-RateLimit-Limit:
+      description: Request limit per hour
+      schema:
+        type: integer
+      example: 100
+    X-RateLimit-Remaining:
+      description: Remaining requests for the hour
+      schema:
+        type: integer
+      example: 94
   schemas:
     Success:
       type: object
